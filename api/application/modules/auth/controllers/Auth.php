@@ -154,7 +154,7 @@ class Auth extends MY_Controller {
 
 					$email = array(
 						'to' => $this->request('email'),
-						'subject' => 'Kích hoạt tài khoản vienvong.com',
+						'subject' => 'Kích hoạt tài khoản '.PUBLICDOMAIN,
 						'message' => $this->load->renderSector('template/activemail', $dataMail, 'authmail', true),
 					);
 
@@ -200,7 +200,7 @@ class Auth extends MY_Controller {
 
 				$email = array(
 					'to' => $this->request('email'),
-					'subject' => 'Đổi mật khẩu tài khoản vienvong.com',
+					'subject' => 'Đổi mật khẩu tài khoản '.PUBLICDOMAIN,
 					'message' => $this->load->renderSector('template/activemail', $dataMail, 'authmail', true),
 				);
 
@@ -235,7 +235,7 @@ class Auth extends MY_Controller {
 
 						$email = array(
 							'to' => $this->request('email'),
-							'subject' => 'Đổi mật khẩu tài khoản vienvong.com',
+							'subject' => 'Đổi mật khẩu tài khoản '.PUBLICDOMAIN,
 							'message' => $this->load->renderSector('template/activemail', $dataMail, 'authmail', true),
 						);
 
@@ -352,23 +352,5 @@ class Auth extends MY_Controller {
 			$this->response(array('ok' => 0, 'err' => 11000, 'errmsg' => 'Email không tồn tại'));
 		}
 	}
-
-	// public function test() {
-	// 	$this->load->helper('captcha64');
-	// 	$this->load->helper('url');
-	// 	$values = array(
-	// 		'word' => 'ABCD1234',
-	// 		'img_path' => './captcha/',
-	// 		'img_url' => 'http://beta.vienvong.com/api/captcha/',
-	// 		'font_path' => base_url() . 'system/fonts/texb.ttf',
-	// 		'font_size' => 50,
-	// 		'img_width' => '150',
-	// 		'img_height' => 50,
-	// 		'expiration' => 14400
-	// 	);
-	// 	$data = create_captcha64($values);
-
-	// 	var_dump($data);
-	// 	echo '<img src="'.$data['image'].'">';
-	// }
 }
+/* End Class*/
