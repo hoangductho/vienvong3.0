@@ -1,0 +1,49 @@
+<form ng-submit="submit();" method="post" class="" name='authForm'>
+	<div ng-show="!success">
+		<div class="form-group" ng-init='passwordChecked = false'>
+			<input class="form-control" type="password" name="password" ng-model='auth.password' placeholder='Password' ng-pattern="'^[\\S]{8,128}$'" ng-maxlength="128" ng-minlength="8" ng-blur="passwordChecked = true" required>
+		</div>
+		<div class="form-group" ng-init='retypeChecked = false'>
+			<input class="form-control" type="password" name='retype' ng-model='retype' placeholder='Nhập lại password' compare-to='auth.password' ng-blur="retypeChecked = true">
+		</div>
+		<div class="form-group">
+			<div class="text-center" ng-if="submitting">
+				<i class="fa fa-repeat fa-spin fa-fw margin-bottom"></i>
+				<span class="sr-only">Loading...</span>
+			</div>
+			<button type="submit" class="btn btn-info form-control" ng-disabled="authForm.$invalid" ng-if='!submitting'>Đăng ký</button>
+		</div>
+	</div>
+	<div ng-if="success">
+		<div class="form-group text-justify">
+			<h2>Thành công</h2>
+		</div>
+		<div class="form-group text-justify">
+			<p>Bạn đã đổi mật khảu thành công. </p>
+			<p>Hệ thống sẽ tự động quay về trang đăng nhập sau 5 giây</p>
+		</div>
+		<hr>
+	</div>
+	<div class="form-group container-fluid">
+		<div class="row">
+			<a ui-sref="app.auth.signin" class="btn-link pull-left">Đăng nhập</a>
+			<a ui-sref="app.auth.signup" class="btn-link pull-right">Đăng ký</a>
+		</div>
+	</div>
+	<div class="error-message form-group row text-danger">
+		<div class="container-fluid">
+			<div ng-messages="authForm.password.$error" ng-if="passwordChecked">
+				<p ng-message="minlength">Password tối thiểu 8 kí tự</p>
+				<p ng-message="maxlength">Password tối đa 128 kí tự</p>
+				<p ng-message="pattern">Password không chứa khoảng trắng</p>
+			</div>
+			<div ng-messages="authForm.retype.$error" ng-if="retypeChecked">
+				<p ng-message='compareTo'>Xác nhận mật khẩu không đúng</p>
+			</div>
+			<div ng-if="errmsg">
+				<p ng-bind="errmsg"></p>
+			</div>
+		</div>
+	</div>
+</form>
+<script src='https://www.google.com/recaptcha/api.js'></script>

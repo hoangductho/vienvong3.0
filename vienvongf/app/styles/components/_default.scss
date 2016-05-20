@@ -1,0 +1,86 @@
+/**
+ * ================================================
+ * Default Page
+ * ================================================
+ */
+html, body {
+	height: 100%;
+	min-height: 100%;
+}
+
+.page {
+	min-height: 100%;
+}
+
+/**
+ * ================================================
+ * Glyphicon Extends
+ * ================================================
+ */
+.gi-2x{font-size: 2em;}
+.gi-3x{font-size: 3em;}
+.gi-4x{font-size: 4em;}
+.gi-5x{font-size: 5em;}
+/**
+ * ================================================
+ * Box Space
+ * ================================================
+ */
+.none-padding {
+	padding: 0;
+}
+
+.none-padding-side {
+	padding-left: 0 !important;
+	padding-right: 0 !important;
+}
+
+.none-padding-lower {
+	padding-top: 0 !important;
+	padding-bottom: 0 !important;
+}
+
+.none-padding-left {
+	padding-left: 0 !important;
+}
+
+.none-padding-right {
+	padding-right: 0 !important;
+}
+
+.full-width {
+	width: 100% !important;
+}
+
+.fixed-width {
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box;         /* Opera/IE 8+ */
+}
+
+.form-group {
+	display: block;
+}
+/**
+ * ================================================
+ * Box Style
+ * ================================================
+ */
+.circle {
+	display: inline-block;
+	border: 1px solid $border-color;
+	border-radius: 50%;
+	overflow: hidden;
+	// padding: $vienvong-default-space / 2;
+}
+/**
+ * ================================================
+ * Text Style
+ * ================================================
+ */
+.blur-text {
+	color: $blur-color;
+}
+.border-text {
+	color: $border-color;
+}

@@ -1,0 +1,42 @@
+/**
+ * ================================================
+ * Authenticate Pages Style
+ * ================================================
+ */
+.auth-page {
+	padding-top: $vienvong-header-height + $vienvong-default-space;
+	text-align: center;
+
+	.auth-box {
+		@extend .container;
+		max-width: 354px;
+
+		.auth-icon {
+			padding: 6px 3px 0 3px;
+			opacity: 0.15;
+
+			img {
+				height: $vienvong-standard-height * 2;
+			}
+		}
+
+		.form-group {
+			margin-bottom: $vienvong-default-space;
+		}
+
+		.jumbotron {
+			padding-left: 25px;
+			padding-right: 25px;
+		}
+	}
+
+	#logo-box {
+		img {
+			height: $vienvong-standard-height;
+		}
+	}
+
+	hr {
+		border-color: $blur-color;
+	}
+}

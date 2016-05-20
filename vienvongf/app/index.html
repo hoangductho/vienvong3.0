@@ -1,0 +1,79 @@
+<!doctype html>
+<html ng-app="vienvongApp">
+  <head>
+    <base href='/'>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!-- build:css(.) styles/vendor.css -->
+    <link rel="stylesheet" href="styles/reset.css">
+    <!-- bower:css -->
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:css(.tmp) styles/main.css -->
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- endbuild -->
+  </head>
+  <body>
+    <!--[if lte IE 8]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    <div ui-view='' class="page"></div>
+
+    <footer>
+      <div class="container-fluid">
+        <p><span class="glyphicon glyphicon-heart"></span> from the Viễn Vọng team</p>
+      </div>
+    </footer>
+
+    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
+     <script>
+       // !function(A,n,g,u,l,a,r){A.GoogleAnalyticsObject=l,A[l]=A[l]||function(){
+       // (A[l].q=A[l].q||[]).push(arguments)},A[l].l=+new Date,a=n.createElement(g),
+       // r=n.getElementsByTagName(g)[0],a.src=u,r.parentNode.insertBefore(a,r)
+       // }(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+       // ga('create', 'UA-XXXXX-X');
+       // ga('send', 'pageview');
+    </script>
+
+    <!-- build:js(.) scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-aria/angular-aria.js"></script>
+    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="bower_components/angular-messages/angular-messages.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="bower_components/angular-touch/angular-touch.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="bower_components/angular-local-storage/dist/angular-local-storage.js"></script>
+    <script src="bower_components/crypto-js/index.js"></script>
+    <script src="bower_components/jsbn/jsbn.js"></script>
+    <!-- endbower -->
+    <script src="bower_components/crypto-js/crypto-js.js"></script>
+    <!-- endbuild -->
+
+        <!-- build:js({.tmp,app}) scripts/scripts.js -->
+        <script src="scripts/app.js"></script>
+        <script src="scripts/directives/compare.directive.js"></script>
+        <script src="scripts/factories/connect.factory.js"></script>
+        <!-- Load Authenticate Module -->
+        <script src="modules/auth/auth.js"></script>
+        <script src="modules/auth/controllers/auth.controller.js"></script>
+        <script src="modules/auth/controllers/active.controller.js"></script>
+        <script src="modules/auth/controllers/signin.controller.js"></script>
+        <script src="modules/auth/controllers/signup.controller.js"></script>
+        <script src="modules/auth/controllers/forgot.controller.js"></script>
+        <script src="modules/auth/controllers/reset.controller.js"></script>
+        <!-- Endload Authenticate Module -->
+        <!-- endbuild -->
+</body>
+</html>

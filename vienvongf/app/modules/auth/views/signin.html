@@ -1,0 +1,33 @@
+<form ng-submit="submit();" method="post" class="" name='authForm'>
+	<div class="form-group" ng-init='emailChecked = false'>
+		<input class="form-control" type="email" name="email" ng-model='auth.email' placeholder="Email" ng-blur='emailChecked = true' required>
+	</div>
+	<div class="form-group" ng-init='passwordChecked = false'>
+		<input class="form-control" type="password" name="password" ng-model='auth.password' placeholder='Password' ng-pattern="'^[\\S]{8,128}$'" ng-maxlength="128" ng-minlength="8" ng-blur="passwordChecked = true" required>
+	</div>
+	<div class="form-group">
+		<div class="text-center" ng-if="submitting">
+			<i class="fa fa-repeat fa-spin fa-fw margin-bottom"></i>
+			<span class="sr-only">Loading...</span>
+		</div>
+		<button type="submit" class="btn btn-info form-control" ng-disabled="authForm.$invalid" ng-if="!submitting">Đăng nhập</button>
+	</div>
+	<div class="form-group container-fluid">
+		<div class="row">
+			<a ui-sref="app.auth.signup" class="btn-link pull-left">Đăng ký</a>
+			<a ui-sref="app.auth.forgot" class="btn-link pull-right">Quên mật khẩu?</a>
+		</div>
+	</div>
+	<div class="error-message form-group row text-danger">
+		<div class="container-fluid">
+			<div ng-messages="authForm.email.$error" ng-if='emailChecked'>
+				<p ng-message="email || required">Email bạn nhập vào không đúng</p>
+			</div>
+			<div ng-messages="authForm.password.$error" ng-if="passwordChecked">
+				<p ng-message="minlength">Password tối thiểu 8 kí tự</p>
+				<p ng-message="maxlength">Password tối đa 128 kí tự</p>
+				<p ng-message="pattern">Password không chứa khoảng trắng</p>
+			</div>
+		</div>
+	</div>
+</form>	
