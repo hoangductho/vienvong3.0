@@ -30,7 +30,6 @@ angular.module('authMod')
   			var url = $rootScope.apiUrl.auth.active;
   			// server process
   			FConnect(url).posts($state.params, function(data){
-  				console.log(data);
   				$scope.ok = data.ok;
   				if(data.ok) {
   					$interval(function(){
@@ -40,7 +39,6 @@ angular.module('authMod')
   						if(!$scope.countdown) {
   							$state.go('app.auth.signin');
   						}
-  						console.log($scope.countdown);
   					}, 1000, $scope.countdown)
   				}else {
   					$scope.err = data.err;

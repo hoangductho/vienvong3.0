@@ -69,8 +69,9 @@ angular
             var text = "";
             var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-            for( var i=0; i < length; i++ )
-                text += possible.charAt(Math.floor(Math.random() * possible.length));
+            for( var i=0; i < length; i++ ) {
+              text += possible.charAt(Math.floor(Math.random() * possible.length));
+            }
 
             return text;
           }
@@ -88,6 +89,8 @@ angular
             var rsa = localStorageService.get('rsakey');
             // Check RSA storage in client
             if(!rsa || (date !== rsa._id)) {
+              // Random string 
+              var random = randomstring(32);
               /**
                * -------------------------------------------------
                * Get RSA Key Successful
@@ -101,7 +104,7 @@ angular
                     // Storage rsa key and share for other page in app
                     localStorageService.set('rsakey',data.result);
                     $rootScope.rsakey = data.result;
-                    // $window.location.reload();
+                    $window.location.reload();
                 }else {
                     console.log('RSA key from server invalid!');
                 }
@@ -112,9 +115,10 @@ angular
                * -------------------------------------------------
                */
               var error = function(err) {
-                alert('Failed to connect to server');
+                window.alert('Failed to connect to server.');
+                console.log(err);
                 return false;
-              }
+              };
               /**
                * -------------------------------------------------
                * Get RSA key from server
@@ -124,11 +128,11 @@ angular
                *
                * @see services/defaultFact.js
                */ 
-              FConnect($rootScope.apiUrl.sec.rsaPubKey, {random: randomstring(32)}).get({}, success, error);
+              new FConnect($rootScope.apiUrl.sec.rsaPubKey, {random: random}).get({}, success, error);
             }else {
                 $rootScope.rsakey = rsa;
             }
-          }
+          };
           
           // Init default security key
           $rootScope.rsaKeyInit();

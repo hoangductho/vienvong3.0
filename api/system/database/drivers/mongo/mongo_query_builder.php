@@ -634,7 +634,7 @@ class Mongo_query_builder extends CI_DB {
         // var to cache select field request
         $select_query = array();
 
-        if($select !== '*') {
+        if(!empty($select) && $select !== '*') {
 
             // convert select string to array
             $select = explode(',', $select);

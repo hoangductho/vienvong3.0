@@ -10,7 +10,7 @@
 
 angular
 	.module('vienvongApp')
-	.factory('FConnect', function ($resource, $rootScope, $filter) {
+	.factory('FConnect', function ($resource, $rootScope) {
 
         // --------------------------------------------------------
 		/**
@@ -30,8 +30,8 @@ angular
             return {
                 key: key,
                 iv: iv,
-            }
-        }
+            };
+        };
         var aeskey = aesKeyInit();
         // ------------------------------------------------------------
         // --------------------------------------------------------------------
@@ -61,7 +61,7 @@ angular
 		        console.log('RSA Key not existed');
 		        return false;
 		    }
-		}
+		};
         // ------------------------------------------------------------
         /**
          * ======================================
@@ -81,7 +81,7 @@ angular
 				// $rootScope.rsaKeyInit();
 			}
 			return rsaEncrypt(data, $rootScope.rsakey.publicHex);
-        }
+        };
         // ------------------------------------------------------------
 		/**
 		 * ======================================
@@ -139,7 +139,7 @@ angular
 				// return string of data responsed
 				return angular.fromJson(CryptoJS.enc.Utf8.stringify(decrypted));
 			}else {
-				conosle.log('AES Key not existed');
+				console.log('AES Key not existed');
 				return false;
 			}
 		};

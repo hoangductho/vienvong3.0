@@ -9,9 +9,9 @@
 		<div class="form-group" ng-init='retypeChecked = false'>
 			<input class="form-control" type="password" name='retype' ng-model='retype' placeholder='Nhập lại password' compare-to='auth.password' ng-blur="retypeChecked = true">
 		</div>
-		<div class="form-group" ng-init='retypeChecked = false'>
+		<!-- <div class="form-group" ng-init='retypeChecked = false'>
 			<div class="g-recaptcha" data-sitekey="6LezfB4TAAAAAI_5bq1EUXtEtXh3oBj2TmAA_LQp"></div>
-		</div>
+		</div> -->
 		<div class="form-group">
 			<div class="text-center" ng-if="submitting">
 				<i class="fa fa-repeat fa-spin fa-fw margin-bottom"></i>

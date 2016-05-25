@@ -1,3 +1,5 @@
+'use strict';
+
 angular
 	.module('vienvongApp')
 	.directive("compareTo", function() {
@@ -9,7 +11,7 @@ angular
 	        link: function(scope, element, attributes, ngModel) {
 	             
 	            ngModel.$validators.compareTo = function(modelValue) {
-	                return modelValue == scope.otherModelValue;
+	                return modelValue === scope.otherModelValue;
 	            };
 	 
 	            scope.$watch("otherModelValue", function() {

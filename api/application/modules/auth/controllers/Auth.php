@@ -17,7 +17,7 @@ class Auth extends MY_Controller {
 				'password' => array(
 					'filter' => FILTER_VALIDATE_REGEXP,
 					'options' => array(
-						'regexp' => "/^[\S]{8,64}+$/"
+						'regexp' => "/^[a-f0-9]{64}+$/"
 					)
 				)
 			)
@@ -95,8 +95,58 @@ class Auth extends MY_Controller {
 	 * @method Post
 	 */
 	public function signin() {
-		$this->response(array('user' => $this->request()));
-		// $this->response_data = array('agent' => $this->agent->browser().' '.$this->agent->version(), 'all' => $this->agent->agent_string());
+		if($user = $this->MUser->exists(array('_id' => md5($this->request('email'))), '_id, email, password, status')) {
+			$user = $user[0];
+			// filter email didn't actived
+			if($user['status'] !== 1) {
+				return $this->response(array('ok' => 0, 'err' => 11000, 'errmsg' => 'Email chưa được xác thực'));
+			}
+			// Password incorrect
+			if($user['password'] !== $this->request('password')) {
+				return $this->response(array('ok' => 0, 'err' => 11000, 'errmsg' => 'Email hoặc mật khẩu không đúng'));
+			}
+			
+			/*
+			 * Create Access token for user
+			 * 
+			 * Using Agent, IP, Randomstring, UserID
+			 */
+			$token = [
+				'ip' => $this->controller->input->ip_address(),
+				'user_id' => $user['_id'],
+				'random_string' => MyExtends()->RandomString(32),
+				'browser' => $this->controller->agent->browser(),
+				'browser_version' => $this->controller->agent->version(),
+				'mobile' => $this->controller->agent->mobile(),
+				'platform' => $this->controller->agent->platform(),
+				'referrer' => $this->controller->agent->referrer(),
+				'agent_string' => $this->controller->agent->agent_string(),
+				'languages' => $this->controller->agent->languages(),
+				'created_at' => date('Y/m/d h:i:s'),
+				'live_time' => new DateTime(date('Y/m/d'))->modify('+7 days')->format('Y/m/d H:i:s'),
+			];
+			$token['_id'] = sha256($token['ip'] . $token['random_string'] . $token['user_id']);
+			// save access info into database
+			try{
+				$insert = $this->MAccess_token->insert($token);
+
+				if($insert['ok']) {
+					// response data
+					$response = [
+						'access_token' => $token['_id'],
+						'created_at' => $token['created_at'],
+						'live_time' => $token['live_time']
+					];
+					return $this->response(array('ok' => 1, 'err' => null, 'result' => $response));	
+				}else {
+					return $this->response(array('ok' => 0, 'err' => 11000, 'errmsg' => 'Đăng nhập xảy ra sự cố, mong bạn vui lòng thử lại sau'));	
+				}
+			} catch(Exception $e) {
+				return $this->response(array('ok' => 0, 'err' => 11000, 'errmsg' => 'Đăng nhập xảy ra sự cố, mong bạn vui lòng thử lại sau'));	
+			}
+		}else {
+			return $this->response(array('ok' => 0, 'err' => 11000, 'errmsg' => 'Email đã được sử dụng'));
+		}
 	}
 	// ----------------------------------------------------------------
 	/**
@@ -337,6 +387,7 @@ class Auth extends MY_Controller {
 			// active email
 			$update = array(
 				'status' => 1,
+				'status_alias' => 'actived',
 				'active_code' => null
 			);
 			try {
