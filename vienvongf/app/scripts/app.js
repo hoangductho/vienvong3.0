@@ -22,6 +22,8 @@ angular
     'LocalStorageModule',
 
     'authMod',
+    'facebookMod',
+    'googleMod',
   ])
   .config(function ($locationProvider, $stateProvider, $urlRouterProvider, localStorageServiceProvider) {
     // name prefix so your app doesn’t accidently read todos from another app using the same variable names
@@ -51,6 +53,8 @@ angular
                 active: $rootScope.apiHost + 'auth/active',
                 forgot: $rootScope.apiHost + 'auth/forgot',
                 resend: $rootScope.apiHost + 'auth/resend',
+                facebook: $rootScope.apiHost + 'auth/facebook',
+                google: $rootScope.apiHost + 'auth/google',
               }
             };
           },

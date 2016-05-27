@@ -1,4 +1,19 @@
 <form ng-submit="submit();" method="post" class="" name='authForm'>
+	<div class="error-message form-group row text-danger">
+		<div class="container-fluid">
+			<div ng-messages="authForm.email.$error" ng-if='emailChecked'>
+				<p ng-message="email || required">Email bạn nhập vào không đúng</p>
+			</div>
+			<div ng-messages="authForm.password.$error" ng-if="passwordChecked">
+				<p ng-message="minlength">Password tối thiểu 8 kí tự</p>
+				<p ng-message="maxlength">Password tối đa 128 kí tự</p>
+				<p ng-message="pattern">Password không chứa khoảng trắng</p>
+			</div>
+			<div ng-if="errmsg">
+				<p ng-bind="errmsg"></p>
+			</div>
+		</div>
+	</div>
 	<div class="form-group" ng-init='emailChecked = false'>
 		<input class="form-control" type="email" name="email" ng-model='auth.email' placeholder="Email" ng-blur='emailChecked = true' required>
 	</div>
@@ -18,16 +33,15 @@
 			<a ui-sref="app.auth.forgot" class="btn-link pull-right">Quên mật khẩu?</a>
 		</div>
 	</div>
-	<div class="error-message form-group row text-danger">
-		<div class="container-fluid">
-			<div ng-messages="authForm.email.$error" ng-if='emailChecked'>
-				<p ng-message="email || required">Email bạn nhập vào không đúng</p>
-			</div>
-			<div ng-messages="authForm.password.$error" ng-if="passwordChecked">
-				<p ng-message="minlength">Password tối thiểu 8 kí tự</p>
-				<p ng-message="maxlength">Password tối đa 128 kí tự</p>
-				<p ng-message="pattern">Password không chứa khoảng trắng</p>
-			</div>
+	<!-- Social Login -->
+	<div class="form-group container-fluid">
+		<div class="text-center row">
+			<div class="blur-text">Đăng nhập bằng tài khoản khác</div>
+			<label class="large-text">
+				<span facebook-login></span>
+				<span>&nbsp;</span>
+				<span google-login></span>
+			</label>
 		</div>
 	</div>
 </form>	

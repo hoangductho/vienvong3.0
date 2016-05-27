@@ -327,10 +327,10 @@ module.exports = function (grunt) {
     imagemin: {
       dist: {
         files: [{
-          expand: true,
-          cwd: '<%= yeoman.app %>/images',
-          src: '{,*/}*.{png,jpg,jpeg,gif}',
-          dest: '<%= yeoman.dist %>/images'
+          // expand: true,
+          // cwd: '<%= yeoman.app %>/images',
+          // src: '{,*/}*.{png,jpg,jpeg,gif}',
+          // dest: '<%= yeoman.dist %>/images'
         }]
       }
     },
@@ -408,8 +408,13 @@ module.exports = function (grunt) {
             '*.{ico,png,txt}',
             '.htaccess',
             '*.html',
+            'modules/*',
+            'modules/*/views/*',
+            'modules/*/views/*/*',
             'images/{,*/}*.{webp}',
-            'styles/fonts/{,*/}*.*'
+            'image/*',
+            'styles/fonts/{,*/}*.*',
+            'fonts/{,*/}*.*',
           ]
         }, {
           expand: true,

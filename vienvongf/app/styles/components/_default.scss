@@ -17,10 +17,10 @@ html, body {
  * Glyphicon Extends
  * ================================================
  */
-.gi-2x{font-size: 2em;}
-.gi-3x{font-size: 3em;}
-.gi-4x{font-size: 4em;}
-.gi-5x{font-size: 5em;}
+.fa-2x{font-size: 2em;}
+.fa-3x{font-size: 3em;}
+.fa-4x{font-size: 4em;}
+.fa-5x{font-size: 5em;}
 /**
  * ================================================
  * Box Space
@@ -75,7 +75,7 @@ html, body {
 }
 /**
  * ================================================
- * Text Style
+ * Text Color
  * ================================================
  */
 .blur-text {
@@ -83,4 +83,10 @@ html, body {
 }
 .border-text {
 	color: $border-color;
+}
+.facebook-text {
+	color: $fb-color;
+}
+.google-text {
+	color: $google-color;
 }

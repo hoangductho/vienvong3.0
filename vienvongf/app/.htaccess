@@ -213,6 +213,10 @@ AddDefaultCharset utf-8
   # Options +SymLinksIfOwnerMatch
     RewriteEngine On
   # RewriteBase /
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} !#
+    RewriteRule (.*) #/$1 [L]
 </IfModule>
 
 # ------------------------------------------------------------------------------
@@ -302,9 +306,12 @@ AddDefaultCharset utf-8
 # This includes directories used by version control systems such as Git and SVN.
 
 <IfModule mod_rewrite.c>
-    RewriteCond %{SCRIPT_FILENAME} -d [OR]
-    RewriteCond %{SCRIPT_FILENAME} -f
-    RewriteRule "(^|/)\." - [F]
+   RewriteEngine On
+   RewriteCond %{SCRIPT_FILENAME} -d [OR]
+   RewriteCond %{SCRIPT_FILENAME} -f
+   RewriteRule "(^|/)\." - [F]
+  
+   RewriteCond %{REQUEST_URI} !index
 </IfModule>
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
