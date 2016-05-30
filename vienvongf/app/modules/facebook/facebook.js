@@ -15,7 +15,7 @@ angular
     function($rootScope, $window){
       $window.fbAsyncInit = function () {
           FB.init({
-            appId      : '649217441856181',
+            appId      : '550251971759267',
             xfbml      : true,
             version    : 'v2.6'
           });
@@ -34,7 +34,5 @@ angular
               FB.XFBML.parse();
           }catch(ex){}
       });
-
-      $rootScope.facebookAppId = '649217441856181';
     }
   ]);

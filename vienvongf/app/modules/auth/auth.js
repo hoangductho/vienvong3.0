@@ -31,6 +31,11 @@ angular
         templateUrl: modulePath + "views/active.html",
         controller: 'ActiveCtrl'
       })
+      .state('app.auth.resend', {
+        url: "/resend",
+        templateUrl: modulePath + "views/resend.html",
+        controller: 'ResendCtrl'
+      })
       .state('app.auth.forgot', {
         url: "/forgot",
         templateUrl: modulePath + "views/forgot.html",

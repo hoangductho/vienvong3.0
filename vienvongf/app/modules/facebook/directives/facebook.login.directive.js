@@ -43,18 +43,12 @@ angular
                     // Logged into your app and Facebook.
                     // send code to server
                     var url = $rootScope.apiUrl.auth.facebook;
-                    FConnect(url).posts(fbauth, function(response){
+                    FConnect(url).posts({access_token: fbauth.accessToken}, function(response){
                         if(response.ok && response.result) {
-                            // get authenticate info
-                            var data = JSON.stringify({userid: response.result.userid, access_token: response.result.access_token});
-                            var auth = {
-                                token: $rootScope.rsaEncryptData(data),
-                                refresh: $rootScope.aesEncrypt(data, {key: $rootScope.rsakey.publicHex.slice(0,32), iv: $rootScope.rsakey.publicHex.slice(0,16),})
-                            };
-                            // storage auth info
-                            localStorageService.set('auth',auth);
-                            // get user profile
-                            getProfile();
+                            // storage authenticate data
+                            localStorageService.set('auth', response.result);
+                            // redirect page
+                            $state.go('app.main');
                         }else{
                             alert(response.err);
                         }

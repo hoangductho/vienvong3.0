@@ -1,0 +1,38 @@
+<form ng-submit="resend();" method="post" class="" name="authForm" ng-if="!ok">
+	<h3>Gửi lại mã kích hoạt</h3>
+	<div class="form-group" ng-init='emailChecked = false'>
+		<input class="form-control" type="email" name="email" ng-model='auth.email' placeholder="Email" ng-blur='emailChecked = true' required>
+	</div>
+	<div class="form-group">
+		<button type="submit" class="btn btn-info form-control" ng-disabled="authForm.$invalid" ng-if="!submitting">Gửi lại</button>
+	</div>
+	<div class="form-group row">
+		<div class="container-fluid">
+			<a ui-sref="app.auth.signin" class="btn-link pull-left">Đăng nhập</a>
+			<a ui-sref="app.auth.signup" class="btn-link pull-right">Đăng ký</a>
+		</div>
+	</div>
+	<div class="form-group" ng-if="submitting">
+		<div class="text-center">
+			<i class="fa fa-repeat fa-spin fa-fw margin-bottom"></i>
+			<span class="sr-only">Loading...</span>
+		</div>
+		<div class="text-center">
+			<span>Đang xử lý...</span>
+		</div>
+	</div>
+	<div class="error-message form-group row text-danger">
+		<div class="container-fluid">
+			<p ng-bind="errmsg"></p>
+			<div ng-messages="authForm.email.$error" ng-if='emailChecked'>
+				<p ng-message="email || required">Email bạn nhập vào không đúng</p>
+			</div>
+		</div>
+	</div>
+</form>
+<div class="form-group row" ng-if="ok">
+	<div class="container-fluid">
+		<h2>Thành công</h2>
+		<p>Bạn sẽ quay lại trang <a ui-sref='app.auth.signin'>đăng nhập</a> sau <span ng-bind='countdown'></span> giây.</p>
+	</div>
+</div>

@@ -43,6 +43,16 @@ angular.module('authMod')
   				}else {
   					$scope.err = data.err;
   					$scope.errmsg = data.errmsg;
+  					if(data.err === 11001) {
+  						$interval(function(){
+	  						if($scope.countdown) {
+	  							$scope.countdown --;
+	  						}
+	  						if(!$scope.countdown) {
+	  							$state.go('app.auth.resend');
+	  						}
+	  					}, 1000, $scope.countdown)
+  					}
   				}
   				$scope.submitting = false;
   			}, function(){
@@ -52,35 +62,4 @@ angular.module('authMod')
 
   		}
   		active();
-  		// ------------------------------------------------------------
-  		/**
-		 * ========================================
-		 * Auth Submit Form
-		 * ========================================
-		 */
-		$scope.resend = function() {
-			if(this.authForm.$invalid){
-				return false;
-			}else {
-				// submitting
-				$scope.submitting = true;
-				// get login url of api
-				var url = $rootScope.apiUrl.auth.resend;
-				// get data of user
-				var resend = {'email': this.authForm.email.$viewValue};
-				// login from api
-				FConnect(url, {}).posts(resend, function(data){
-					if(data.ok){
-
-					}else {
-						$scope.errmsg = data.errmsg;
-					}
-
-					$scope.submitting = false;
-				}, function() {
-					$scope.errmsg = 'Quá trình xử lý xảy ra sự cố. Mong bạn vui lòng thử lại sau.';
-					$scope.submitting = false;
-				});
-			}
-		}
 	});

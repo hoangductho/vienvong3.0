@@ -33,10 +33,11 @@ angular.module('authMod')
 				var user = {'email': this.authForm.email.$viewValue, 'password': CryptoJS.SHA256(this.authForm.password.$viewValue).toString()};
 				// login from api
 				FConnect(url, {}).posts(user, function(data){
-					console.log(data)
 					if(data.ok){
-						localStorageService.set('auth', data.result);
-						$state.go('app.main');
+						// storage profile in client
+                        localStorageService.set('profile', data.result);
+                        // redirect page into other page
+                        $state.go('app.main');
 					}else {
 						$scope.errmsg = data.errmsg;
 					}

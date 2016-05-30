@@ -7,7 +7,7 @@
 angular
     .module('googleMod')
     .directive('googleLogin', ['$rootScope', '$state','localStorageService', 'FConnect', 
-        function ($rootScope, $state, localStorageService, FConnect) {
+        function ($rootScope, $state, localStorageService, FConnect, FSecurity) {
         return {
             restrict: 'A',
             scope: {},
@@ -40,6 +40,7 @@ angular
                  * ========================================
                  */
                 var login = function(gpauth) {
+                    console.log(gpauth);
                     var auth = {
                         access_token: gpauth.access_token,
                         expires_at: gpauth.expires_at,
@@ -50,17 +51,12 @@ angular
                     var url = $rootScope.apiUrl.auth.google;
                     // connect to server
                     FConnect(url).posts(auth, function(response){
+                        console.log(response);
                         if(response.ok && response.result) {
-                            // get authenticate info
-                            var data = JSON.stringify({userid: response.result.userid, access_token: response.result.access_token});
-                            var auth = {
-                                token: $rootScope.rsaEncryptData(data),
-                                refresh: $rootScope.aesEncrypt(data, {key: $rootScope.rsakey.publicHex.slice(0,32), iv: $rootScope.rsakey.publicHex.slice(0,16),})
-                            };
-                            // storage auth info
-                            localStorageService.set('auth',auth);
-                            // get user profile
-                            getProfile();
+                            // storage authenticate data
+                            localStorageService.set('auth', response.result);
+                            // redirect page
+                            $state.go('app.main');
                         }else{
                             alert(response.err);
                         }
@@ -75,7 +71,7 @@ angular
                 scope.gpLogin = function() {
                     // param to init gapi
                     var myParams = {
-                        'client_id': '1082471688155-url1mk0kstnrnukmpvdt9humd7qbvnag.apps.googleusercontent.com',
+                        'client_id': '1082471688155-kao66flq0pn2f1ceo006q1prsrrp2r4r.apps.googleusercontent.com',
                         // 'cookiepolicy': 'single_host_origin',
                         // 'callback': scope.login,
                         'scope': 'https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/userinfo.email',
