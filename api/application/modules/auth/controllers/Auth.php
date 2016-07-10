@@ -486,7 +486,7 @@ class Auth extends MY_Controller {
 	 * @method Post
 	 */
 	public function active() {
-		if($user = $this->MUser->exists(array('_id' => md5($this->request('email'))), '_id, active_code')) {
+		if($user = $this->MUser->exists(array('_id' => $this->request('uid')), '*')) {
 			$user = $user[0];
 			// check email actived
 			if(!empty($user['status']) && $user['status'] === 1) {

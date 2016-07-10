@@ -35,7 +35,7 @@ angular.module('authMod')
 				FConnect(url, {}).posts(user, function(data){
 					if(data.ok){
 						// storage profile in client
-                        localStorageService.set('profile', data.result);
+                        localStorageService.set('auth', data.result);
                         // redirect page into other page
                         $state.go('app.main');
 					}else {

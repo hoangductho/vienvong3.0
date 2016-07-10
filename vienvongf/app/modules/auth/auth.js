@@ -19,7 +19,45 @@ angular
         abstract: true,
         url: "/auth",
         templateUrl: modulePath + "views/auth.html",
-        controller: 'AuthCtrl'
+        controller: 'AuthCtrl',
+        resolve: {
+          online: function($rootScope, $state, $location, localStorageService) {
+            /**
+             * ====================================
+             * Check Loged In
+             * ====================================
+             */
+            var loggedIn = function() {
+              if(!$rootScope.auth) {
+                $rootScope.auth = localStorageService.get('auth');  
+              }
+              
+              if($rootScope.auth) {
+                $state.go('app.main');
+              }
+            }
+            /**
+             * ====================================
+             * Catch Auth URLs Change
+             * ====================================
+             */
+            $rootScope.$on( '$locationChangeStart', function(){
+              if($state.includes('app.auth') && !$state.includes('app.auth.logout')) {
+                loggedIn();
+              }
+            });
+            /**
+             * ====================================
+             * Check Logged In 
+             * ====================================
+             */
+            $rootScope.$on( '$stateChangeSuccess', function(){
+              if($state.includes('app.auth') && !$state.includes('app.auth.logout')) {
+                loggedIn();
+              }
+            });
+          }
+        }
       })
       .state('app.auth.signin', {
         url: "/signin",
@@ -51,9 +89,9 @@ angular
         templateUrl: modulePath + "views/signup.html",
         controller: 'SignupCtrl'
       })
-      .state('app.auth.logout', {
+      .state('app.auth.signout', {
         url: "/logout",
-        templateUrl: modulePath + "views/logout.html",
-        // controller: 'LoginCtrl'
+        templateUrl: modulePath + "views/signout.html",
+        controller: 'SignoutCtrl'
       });
   });
