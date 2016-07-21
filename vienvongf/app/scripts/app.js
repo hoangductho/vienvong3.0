@@ -20,10 +20,12 @@ angular
     'ui.router',
     'ui.bootstrap',
     'LocalStorageModule',
+    '720kb.datepicker',
 
     'authMod',
     'facebookMod',
     'googleMod',
+    'userMod',
   ])
   .config(function ($locationProvider, $stateProvider, $urlRouterProvider, localStorageServiceProvider) {
     // name prefix so your app doesn’t accidently read todos from another app using the same variable names
@@ -55,11 +57,27 @@ angular
                 resend: $rootScope.apiHost + 'auth/resend',
                 facebook: $rootScope.apiHost + 'auth/facebook',
                 google: $rootScope.apiHost + 'auth/google',
+              },
+              user: {
+                profile: {
+                  index: $rootScope.apiHost + 'user/profile/index',
+                  update: $rootScope.apiHost + 'user/profile/update',
+                },
+                password: $rootScope.apiHost + 'user/password',
               }
             };
           },
         },
-        controller: function($rootScope, $filter, $window, localStorageService, FConnect) {
+        controller: function($rootScope, $filter, $window, $interval, localStorageService, FConnect) {
+          // --------------------------------------------------------
+          /**
+           * Load user authenticate info
+           */
+          function getAuth() {
+            $rootScope.auth = localStorageService.get('auth');
+          }
+          getAuth();
+          $interval(getAuth, 3000);
           // --------------------------------------------------------
           /**
            * ==============================================
@@ -146,6 +164,7 @@ angular
       .state('app.main', {
         url: "/",
         templateUrl: "views/main.html",
+        controller: 'MainCtrl'
       })
       .state('app.about', {
         url: "/about",

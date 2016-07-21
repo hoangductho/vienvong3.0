@@ -8,5 +8,13 @@
  * Controller of the vienvongApp
  */
 angular.module('authMod')
-  .controller('AuthCtrl', function () {
+  .controller('AuthCtrl', function ($rootScope, $state) {
+  	// setup user info when info changed
+	$rootScope.$watch('auth', function(data){
+		if(!angular.isUndefined(data) && data) {
+			if($state.includes('app.auth')) {
+				$state.go('app.main');
+			}
+		}
+	});
   });

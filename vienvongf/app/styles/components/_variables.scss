@@ -1,3 +1,20 @@
+// Defining values  
+
+// ss: supper-small
+// xs: extra-small
+// sm: small
+// md: middle
+// lg: large
+$screen-lg-min: 1200px;
+$screen-md-max: ($screen-lg-min - 1);
+$screen-md-min: 992px;
+$screen-sm-max: ($screen-md-min - 1);
+$screen-sm-min: 768px;
+$screen-xs-max: ($screen-sm-min - 1);
+$screen-xs-min: 544px;
+$screen-ss-max: ($screen-xs-min - 1);
+$screen-ss-min: 320px;
+
 //
 $font-family: Helvetica, arial, nimbussansl, liberationsans, freesans, clean, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 
@@ -12,3 +29,5 @@ $rss-color: #f86811;
 $vienvong-standard-height: 50px;
 $vienvong-header-height: $vienvong-standard-height;
 $vienvong-default-space: 12px;
+// z-index
+$form-modal-zindex: 9;

@@ -48,7 +48,11 @@ angular.module('authMod')
   				}
   				$scope.submitting = false;
   			}, function(){
-  				$scope.errmsg = 'Quá trình xử lý xảy ra sự cố. Mong bạn vui lòng thử lại sau.';
+  				if(data.ok == 0) {
+            $scope.errmsg = data.errmsg;
+          }else {
+            $scope.errmsg = "Server xảy ra sự cố, xin vui lòng thử lại sau!";
+          }
   				$scope.submitting = false;
   			});
 

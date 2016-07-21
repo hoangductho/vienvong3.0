@@ -12,7 +12,7 @@ class Presytem {
 		// setup Cross Domain Origin
 		header("Access-Control-Allow-Origin: *");
 		// setup Header's fields
-		header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, Content-Header");
+		header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, Content-Header, Authenticate");
 		// setup credentials
 	    header('Access-Control-Allow-Credentials: true');
 	    // setup method support

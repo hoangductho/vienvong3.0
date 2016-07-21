@@ -115,6 +115,10 @@ class Auth extends MY_Controller {
 		// 	'security' => false
  	// 	)
 	);
+	/**
+	 * Extend funtion
+	 */
+	private $Extend;
 	// ----------------------------------------------------------------
 	/**
 	 * ============================================
@@ -125,6 +129,7 @@ class Auth extends MY_Controller {
 	 */
 	public function __construct() {
 		parent::__construct();
+		$this->Extend = new MyExtends();
 	}
 	// ----------------------------------------------------------------
 	/**
@@ -132,11 +137,12 @@ class Auth extends MY_Controller {
 	 * Create Access Session
 	 * ======================================================
 	 * 
-	 * @param string $uid User's ID 
+	 * @param string $email User's email 
 	 *
 	 * @return array $token access token
 	 */
-	private function _access_token($uid) {
+	private function _access_token($email, $password = null) {
+		$uid = $this->Extend->CreateID($email);
 		/*
 		 * Create Access token for user
 		 * 
@@ -144,13 +150,13 @@ class Auth extends MY_Controller {
 		 */
 		// create datetime object
 		$date = new DateTime(date('Y/m/d'));
-		// create extend's functions object
-		$extend = new MyExtends();
 		// create token data
 		$token = [
 			'ip' => $this->input->ip_address(),
 			'user_id' => $uid,
-			'random_string' => $extend->RandomString(32),
+			'email' => $email,
+			'password' => $password,
+			'random_string' => $this->Extend->RandomString(32),
 			'browser' => $this->agent->browser(),
 			'browser_version' => $this->agent->version(),
 			'mobile' => $this->agent->mobile(),
@@ -170,6 +176,7 @@ class Auth extends MY_Controller {
 			if($insert['ok']) {
 				// response data
 				$response = [
+					'email' => $email,
 					'access_token' => $token['_id'],
 					'created_at' => $token['created_at'],
 					'live_time' => $token['live_time']
@@ -193,10 +200,10 @@ class Auth extends MY_Controller {
 	 * @method Post
 	 */
 	public function signin() {
-		if($user = $this->MUser->exists(array('_id' => md5($this->request('email'))), '_id, email, password, status')) {
+		if($user = $this->MUser->exists(array('_id' => $this->Extend->CreateID($this->request('email'))), '_id, email, password, status')) {
 			$user = $user[0];
 			// filter email didn't actived
-			if((int) $user['status'] !== 1) {
+			if((int) $user['status'] !== $this->config->item('user_status')->actived) {
 				return $this->response(array('ok' => 0, 'err' => 11000, 'errmsg' => 'Email chưa được xác thực'));
 			}
 			// Password incorrect
@@ -204,7 +211,7 @@ class Auth extends MY_Controller {
 				return $this->response(array('ok' => 0, 'err' => 11000, 'errmsg' => 'Email hoặc mật khẩu không đúng'));
 			}
 			
-			return $this->_access_token($user['_id']);
+			return $this->_access_token($user['email'], $user['password']);
 		}else {
 			return $this->response(array('ok' => 0, 'err' => 11000, 'errmsg' => 'Email chưa được đăng kí'));
 		}
@@ -216,8 +223,9 @@ class Auth extends MY_Controller {
 	 * ======================================================
 	 */
 	private function _quick_sign_up($email) {
+		$user = $this->MUser->exists(array('_id' => $this->Extend->CreateID($email)));
 		// create user proccess
-		if(!$this->MUser->exists(array('_id' => md5($email)))) {
+		if(!$user) {
 			// current date
 			$date = date('Y/m/d H:i:s');
 			// date modify
@@ -227,7 +235,7 @@ class Auth extends MY_Controller {
 
 			// create sing up data
 			$signup = array(
-				'_id' => md5($email),
+				'_id' => $this->Extend->CreateID($email),
 				'email' => $email,
 		  		'password' => null,
 		  		'status' => 1,
@@ -254,7 +262,10 @@ class Auth extends MY_Controller {
 			}
 			
 		}else {
-			return true;
+			if(!empty($user['status']) && $user['status'] === $this->config->item('user_status')->actived)
+				return true;
+			else 
+				return false;
 		}
 	}
 	// ----------------------------------------------------------------
@@ -309,7 +320,7 @@ class Auth extends MY_Controller {
 		 	}
 		 	if(!empty($user_email)) {
 		 		if($this->_quick_sign_up($user_email)) {
-		 			$this->_access_token(md5($user_email));	
+		 			$this->_access_token($user_email);	
 		 		}else {
 		 			$this->response(array('ok' => 0, 'err' => 11000, 'errmsg' => 'Quá trình xử lý xảy ra sự cố. Mong bạn vui lòng thử lại sau.'));
 		 		}
@@ -369,7 +380,7 @@ class Auth extends MY_Controller {
 			// create access session token
 		 	if(!empty($user['email'])) {
 		 		if($this->_quick_sign_up($user['email'])) {
-		 			$this->_access_token(md5($user['email']));
+		 			$this->_access_token($user['email']);
 		 		}else {
 		 			$this->response(array('ok' => 0, 'err' => 11000, 'errmsg' => 'Quá trình xử lý xảy ra sự cố. Mong bạn vui lòng thử lại sau.'));
 		 		}
@@ -397,7 +408,7 @@ class Auth extends MY_Controller {
 		try {
 			$dataMail = array(
 				'email' => $this->request('email'),
-				'active_link' => PUBLICDOMAIN . 'auth/active/' . md5($email) . '/' . $code,
+				'active_link' => PUBLICDOMAIN . 'auth/active/' . $this->Extend->CreateID($email) . '/' . $code,
 			);
 
 			$email = array(
@@ -426,7 +437,7 @@ class Auth extends MY_Controller {
 	 */
 	public function signup() {
 		// create user proccess
-		if(!$this->MUser->exists(array('_id' => md5($this->request('email'))))) {
+		if(!$this->MUser->exists(array('_id' => $this->Extend->CreateID($this->request('email'))))) {
 			// current date
 			$date = date('Y/m/d H:i:s');
 			// date modify
@@ -436,10 +447,10 @@ class Auth extends MY_Controller {
 
 			// create sing up data
 			$signup = array(
-				'_id' => md5($this->request('email')),
+				'_id' => $this->Extend->CreateID($this->request('email')),
 				'email' => $this->request('email'),
 		  		'password' => hash('sha256', $this->request('password')),
-		  		'status' => 0,
+		  		'status' => $this->config->item('user_status')->pendding,
  		  		'status_alias' => 'pendding',
 				'active_code' => array(
 					'code' => $ext->RandomString(32),
@@ -453,6 +464,9 @@ class Auth extends MY_Controller {
 		  		'avatar' => null,
 		  		'avatar_thumb' => null,
 		  		'interested' => null,
+		  		'address' => null,
+		  		'introduce' => null,
+		  		'website' => null,
 		  		'created_at' => $date,
 			);
 
@@ -489,7 +503,7 @@ class Auth extends MY_Controller {
 		if($user = $this->MUser->exists(array('_id' => $this->request('uid')), '*')) {
 			$user = $user[0];
 			// check email actived
-			if(!empty($user['status']) && $user['status'] === 1) {
+			if(!empty($user['status']) && $user['status'] !== $this->config->item('user_status')->pendding) {
 				$this->response(array('ok' => 0, 'err' => 11000, 'errmsg' => 'Email đã được xác thực'));
 				return;
 			}
@@ -506,7 +520,7 @@ class Auth extends MY_Controller {
 			}
 			// active email
 			$update = array(
-				'status' => 1,
+				'status' => $this->config->item('user_status')->actived,
 				'status_alias' => 'actived',
 				'active_code' => null
 			);
@@ -532,10 +546,10 @@ class Auth extends MY_Controller {
 	 * @method Post
 	 */
 	public function resend() {
-		if($user = $this->MUser->exists(array('_id' => md5($this->request('email'))), '_id, active_code')) {
+		if($user = $this->MUser->exists(array('_id' => $this->Extend->CreateID($this->request('email'))), '_id, active_code')) {
 			$user = $user[0];
 			// check email actived
-			if(!empty($user['status']) && $user['status'] === 1) {
+			if(!empty($user['status']) && $user['status'] !== $this->config->item('user_status')->pendding) {
 				return $this->response(array('ok' => 0, 'err' => 11000, 'errmsg' => 'Email đã được xác thực'));
 			}
 			// check active code expired
@@ -581,7 +595,7 @@ class Auth extends MY_Controller {
 	 */
 	public function forgot() {
 		// check user existed
-		if($user = $this->MUser->exists(array('_id' => md5($this->request('email'))), '_id, reset_code')) {
+		if($user = $this->MUser->exists(array('_id' => $this->Extend->CreateID($this->request('email'))), '_id, reset_code')) {
 			$user = $user[0];
 			// reset code not existed
 			$time = date('Y/m/d H');
@@ -621,12 +635,12 @@ class Auth extends MY_Controller {
 				);
 				// push reset code to database
 				try {
-					if($this->MUser->update($update, array('_id' => md5($this->request('email'))))) {
+					if($this->MUser->update($update, array('_id' => $this->Extend->CreateID($this->request('email'))))) {
 						$this->response(array('ok' => 1, 'err' => null));
 						// send reset code to user's email
 						$dataMail = array(
 							'email' => $this->request('email'),
-							'active_link' => PUBLICDOMAIN . 'auth/reset/' . md5($this->request('email')) . '/' . $update['reset_code']['code'],
+							'active_link' => PUBLICDOMAIN . 'auth/reset/' . $this->Extend->CreateID($this->request('email')) . '/' . $update['reset_code']['code'],
 						);
 
 						$email = array(

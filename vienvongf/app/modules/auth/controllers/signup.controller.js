@@ -48,6 +48,11 @@ angular.module('authMod')
 					// end submitting
 					$scope.submitting = false;
 				}, function() {
+					if(data.ok == 0) {
+						$scope.errmsg = data.errmsg;
+					}else {
+						$scope.errmsg = "Server xảy ra sự cố, xin vui lòng thử lại sau!";
+					}
 					// end submitting
 					$scope.submitting = false;
 				});

@@ -34,6 +34,8 @@ angular.module('authMod')
 				// login from api
 				FConnect(url, {}).posts(user, function(data){
 					if(data.ok){
+						// set auth status
+						$rootScope.auth = data.result;
 						// storage profile in client
                         localStorageService.set('auth', data.result);
                         // redirect page into other page
@@ -44,6 +46,11 @@ angular.module('authMod')
 
 					$scope.submitting = false;
 				}, function() {
+					if(data.ok == 0) {
+						$scope.errmsg = data.errmsg;
+					}else {
+						$scope.errmsg = "Server xảy ra sự cố, xin vui lòng thử lại sau!";
+					}
 					$scope.submitting = false;
 				});
 			}

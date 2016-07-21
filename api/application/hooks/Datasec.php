@@ -78,7 +78,7 @@ class Datasec {
 	 */
 	public function responseData() {
 		$controller = &get_instance();
-		if($controller->input->method(true) === 'POST' && !empty($controller->aes)) {
+		if(!empty($controller->aes)) {
 			// init PHP seclib
 			$Phpseclib = new Phpseclib();
 			// AES Encrypt data

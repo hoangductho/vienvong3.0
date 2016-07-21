@@ -10,7 +10,7 @@
 
 angular
 	.module('vienvongApp')
-	.factory('FConnect', function ($resource, $rootScope, FSecurity) {
+	.factory('FConnect', function ($resource, $rootScope, localStorageService, $state, FSecurity) {
 
         // --------------------------------------------------------
 		/**
@@ -57,7 +57,18 @@ angular
 		 * @return JSON
 		 */
 		var responseSecurity = function(data) {
-			return FSecurity.aesDecrypt(data, aeskey);
+			// convert response data to Json
+        	var dataGeted = angular.fromJson(data);
+        	if(dataGeted.response) {
+        		return FSecurity.aesDecrypt(dataGeted.response, aeskey);
+        	}else {
+        		if(dataGeted.ok == 0 && dataGeted.err == 498) {
+        			alert('Phiên làm việc hết hiệu lực!');
+        			$state.go('app.auth.signout');
+        		}
+        		return dataGeted;
+        	}
+			
 		};
 		// ------------------------------------------------------------
 		/**
@@ -86,7 +97,7 @@ angular
 	                return data;
 	            },
 	            transformResponse: function(data, headers){
-	                return data;
+	            	return responseSecurity(data);
 	            }
 	  		},
 	  		posts: {
@@ -101,10 +112,45 @@ angular
 	  				return requestSecurity(data, headers);
 	  			},
 	            transformResponse: function(data, headers){
-	            	// convert response data to Json
-	            	var dataGeted = angular.fromJson(data);
-
-	            	return responseSecurity(dataGeted.response);
+	            	return responseSecurity(data);
+	            }
+	  		},
+	  		getauth: {
+	  			method: 'GET',
+	  			headers: { 
+	  				'Content-Header': function() { 
+	  					// AES key package
+	  					return FSecurity.rsaEncryptData(aeskey.key+'/'+aeskey.iv);
+	  				},
+	  				'Authenticate': function() {
+	  					var auth = localStorageService.get('auth');
+	  					return FSecurity.aesEncrypt(auth, aeskey);
+	  				}
+	  			},
+	  			transformRequest: function(data, headers){
+	                return data;
+	            },
+	            transformResponse: function(data, headers){
+	            	return responseSecurity(data);
+	            }
+	  		},
+	  		postauth: {
+	  			method: 'POST',
+	  			headers: { 
+	  				'Content-Header': function() { 
+	  					// AES key package
+	  					return FSecurity.rsaEncryptData(aeskey.key+'/'+aeskey.iv);
+	  				},
+	  				'Authenticate': function() {
+	  					var auth = localStorageService.get('auth');
+	  					return FSecurity.aesEncrypt(auth, aeskey);
+	  				}
+	  			},
+	  			transformRequest: function(data, headers) {
+	  				return requestSecurity(data, headers);
+	  			},
+	            transformResponse: function(data, headers){
+	            	return responseSecurity(data);
 	            }
 	  		},
 	  	};

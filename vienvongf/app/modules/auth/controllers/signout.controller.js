@@ -9,5 +9,6 @@
  */
 angular.module('authMod')
 	.controller('SignoutCtrl', function ($rootScope, $scope, $state, localStorageService, FConnect) {
+		$rootScope.auth = null;
 		localStorageService.remove('auth');
 	});

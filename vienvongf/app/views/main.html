@@ -35,10 +35,13 @@
               </div>
             </form>
             <ul class="nav navbar-nav navbar-right">
-              <li class="">
+              <li class="" ng-if="!user">
                 <a class="pull-left" ui-sref="app.auth.signin">Đăng nhập</a>
                 <a class="none-padding-side pull-left">|</a>
                 <a class="pull-left" ui-sref='app.auth.signup'>Đăng ký</a>
+              </li>
+              <li class="" ng-if="user">
+                <a class="pull-left" ui-sref="app.main.user.profile" ng-bind="user"></a>
               </li>
               <!-- <li class="dropdown row">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
@@ -58,9 +61,9 @@
       </div>
     </header>
 
-    <div class="container-fluid">
+    <div class="container-fluid content-page">
       <div ui-view=""></div>
-      <div class="jumbotron">
+      <!-- <div class="jumbotron">
         <h1>'Allo, 'Allo!</h1>
         <p class="lead">
           <img src="images/yeoman.png" alt="I'm Yeoman"><br>
@@ -82,7 +85,7 @@
 
         <h4>Karma</h4>
         <p>Spectacular Test Runner for JavaScript.</p>
-      </div>
+      </div> -->
     </div>
 
 

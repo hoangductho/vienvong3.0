@@ -60,13 +60,25 @@ $hook['post_controller_constructor'][] = array(
 
 /*
 | -------------------------------------------------------------------------
-| Request Data Decrypt
+| Authenticate User Requested
 | -------------------------------------------------------------------------
 | 
-| In security mod, data sent from client will be encrypt by AES/RSA method
+| Check authenticate of user when he sent request to server
 |
-| If controller want to use them, this need defined security mod and using  
-| Datasec class to get data request
+*/
+$hook['post_controller_constructor'][] = array(
+        'class'    => 'Rules',
+        'function' => 'authenticate',
+        'filename' => 'Rules.php',
+        'filepath' => 'hooks',
+);
+
+/*
+| -------------------------------------------------------------------------
+| Request Data Valid
+| -------------------------------------------------------------------------
+| 
+| Check data sent from client is validate with Rules defined
 |
 */
 $hook['post_controller_constructor'][] = array(

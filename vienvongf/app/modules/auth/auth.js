@@ -90,7 +90,7 @@ angular
         controller: 'SignupCtrl'
       })
       .state('app.auth.signout', {
-        url: "/logout",
+        url: "/signout",
         templateUrl: modulePath + "views/signout.html",
         controller: 'SignoutCtrl'
       });

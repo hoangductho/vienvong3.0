@@ -90,3 +90,53 @@ html, body {
 .google-text {
 	color: $google-color;
 }
+.twitter-text {
+	color: $tw-color;
+}
+.rss-text {
+	color: $rss-color;
+}
+.required-text {
+	color: red;
+}
+/**
+ * ================================================
+ * Default Page Style
+ * ================================================
+ */
+.content-page {
+	padding-top: $vienvong-default-space + $vienvong-header-height;
+}
+.error-message {
+	@extend .text-danger;
+	padding-top: 8px;
+	padding-bottom: 8px;
+}
+/**
+ * ================================================
+ * Form style
+ * ================================================
+ */
+.form-modal {
+	display: none;
+}
+
+form.form-loading {
+	.form-input {
+		opacity: 0.3
+	}
+	.form-modal {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		top: 0;
+		z-index: $form-modal-zindex;
+		display: block;
+
+		.form-modal-loading {
+			width: 100%;
+			text-align: center;
+			margin-top: 40%;
+		}
+	}
+}

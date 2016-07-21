@@ -1,0 +1,13 @@
+<!-- <div class="full-width pull-left columns-2"> -->
+<div class="container columns-2">
+	<div class="left-nav-box col-md-3">
+		<ul class="nav nav-pills nav-stacked">
+			<li ng-class="state.includes('^.profile') ? 'active' : ''"><a ui-sref="app.main.user.profile">Thông tin cá nhân</a></li>
+			<li ng-class="state.includes('^.password') ? 'active' : ''"><a ui-sref="app.main.user.password">Đổi mật khẩu</a></li>
+			<li><a href="" ng-click="logout()">Đăng xuất</a></li>
+		</ul>
+	</div>
+	<div class="right-content-box col-md-9" ui-view>
+		
+	</div>
+</div>

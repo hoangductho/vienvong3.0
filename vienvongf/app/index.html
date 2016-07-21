@@ -8,8 +8,9 @@
     <meta name="viewport" content="width=device-width">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(.) styles/vendor.css -->
-    <link rel="stylesheet" href="styles/reset.css">
+    
     <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/angularjs-datepicker/dist/angular-datepicker.min.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
@@ -52,17 +53,19 @@
     <script src="bower_components/angular-resource/angular-resource.js"></script>
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
     <script src="bower_components/angular-touch/angular-touch.js"></script>
-    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
     <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
     <script src="bower_components/angular-local-storage/dist/angular-local-storage.js"></script>
     <script src="bower_components/crypto-js/index.js"></script>
     <script src="bower_components/jsbn/jsbn.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="bower_components/angularjs-datepicker/dist/angular-datepicker.min.js"></script>
     <!-- endbower -->
     <script src="bower_components/crypto-js/crypto-js.js"></script>
     <!-- endbuild -->
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/app.js"></script>
+        <script src="scripts/controllers/main.controller.js"></script>
         <script src="scripts/directives/compare.directive.js"></script>
         <script src="scripts/factories/security.factory.js"></script>
         <script src="scripts/factories/connect.factory.js"></script>
@@ -73,6 +76,7 @@
         <script src="modules/auth/controllers/resend.controller.js"></script>
         <script src="modules/auth/controllers/signin.controller.js"></script>
         <script src="modules/auth/controllers/signup.controller.js"></script>
+        <script src="modules/auth/controllers/signout.controller.js"></script>
         <script src="modules/auth/controllers/forgot.controller.js"></script>
         <script src="modules/auth/controllers/reset.controller.js"></script>
         <!-- Endload Authenticate Module -->
@@ -84,6 +88,12 @@
         <script src="modules/google/google.js"></script>
         <script src="modules/google/directives/google.login.directive.js"></script>
         <!-- Endload Google Module -->
+        <!-- Load User Module -->
+        <script src="modules/user/user.js"></script>
+        <script src="modules/user/controllers/user.controller.js"></script>
+        <script src="modules/user/controllers/profile.controller.js"></script>
+        <script src="modules/user/controllers/password.controller.js"></script>
+        <!-- Endload User Module -->
         <!-- endbuild -->
 </body>
 </html>

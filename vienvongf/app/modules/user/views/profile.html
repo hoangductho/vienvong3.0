@@ -1,0 +1,65 @@
+<form class="user-form" ng-class="submitting ? 'form-loading' : ''" ng-submit="update()" name="ProfileForm">
+	<div class="form-input form-group">
+		<div class="form-group form-rule">
+			<label for="exampleInputEmail1">Email</label>
+			<input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email" ng-model="profile.email" disabled="">
+		</div>
+		<div class="form-group form-rule">
+			<label>Họ và tên <span class='required-text'>*</span></label>
+			<input type="text" class="form-control" name="fullname" placeholder="Họ và tên" ng-model="profile.fullname" ng-pattern="/^.{6,64}$/u"  required ng-init="fullnameInputting = 0" ng-focus="fullnameInputting = 1" ng-blur="fullnameInputting = 0" uib-tooltip="Họ và tên bằng tiếng việt dài 6-64 ký tự" tooltip-placement="top-left" tooltip-trigger="focus">
+			<div ng-messages="ProfileForm.fullname.$error" ng-if="fullnameInputting == false">
+				<p ng-message="pattern" class="error-message">Tên bạn nhập vào không hợp lệ</p>
+			</div>
+		</div>
+		<div class="form-group form-rule pull-left">
+			<label>Ngày sinh <span class='required-text'>*</span></label>
+	        <datepicker date-format="yyyy-MM-dd">
+			    <div class="input-group">
+			        <input class="form-control" placeholder="01/01/2000" ng-model="profile.birthday" name='birthday' ng-pattern="/^[0-9]{2}/[0-9]{2}/[0-9]{4}$/" required ng-init="birthdayInputting = 0" ng-focus="birthdayInputting = 1" ng-blur="birthdayInputting = 0"/>
+			        <span class="input-group-addon" style="cursor: pointer">
+			        <i class="fa fa-lg fa-calendar"></i>
+			        </span>
+			    </div>
+			</datepicker>
+			<div ng-messages="ProfileForm.birthday.$error" ng-if="birthdayInputting == false">
+				<p ng-message="pattern" class="error-message">Ngày sinh bạn nhập vào không hợp lệ</p>
+			</div>
+		</div>
+		<div class="form-group form-rule">
+			<label>Địa chỉ</label>
+			<input type="text" class="form-control" name="address" placeholder="Địa chỉ" ng-model="profile.address" ng-pattern="/^.{6,128}$/u" ng-init="addressInputting = 0" ng-focus="addressInputting = 1" ng-blur="addressInputting = 0" uib-tooltip="Địa chỉ bằng tiếng việt dài 6-128 ký tự" tooltip-placement="top-left" tooltip-trigger="focus">
+
+			<div ng-messages="ProfileForm.address.$error" ng-if="addressInputting == false">
+				<p ng-message="pattern" class="error-message">Địa chỉ bạn nhập vào không hợp lệ</p>
+			</div>
+		</div>
+		<div class="form-group form-rule">
+			<label>Giới thiệu</label>
+			<textarea class="form-control" rows="5" placeholder="Giới thiệu ngắn về bản thân" ng-model="profile.introduce" name="introduce" ng-pattern="/^.{6,512}$/u" ng-init="introduceInputting = 0" ng-focus="introduceInputting = 1" ng-blur="introduceInputting = 0" uib-tooltip="Giới thiệu về bản thân bằng tiếng việt dài 6-512 ký tự" tooltip-placement="top-left" tooltip-trigger="focus"></textarea>
+			<div ng-messages="ProfileForm.introduce.$error" ng-if="addressInputting == false">
+				<p ng-message="pattern" class="error-message">Giới thiệu bạn nhập vào không hợp lệ</p>
+			</div>
+		</div>
+		<div class="form-group form-rule">
+			<label>Trang cá nhân</label>
+			<input type="url" class="form-control" placeholder="http://" ng-model="profile.website">
+		</div>
+		<div class="form-group" ng-if="errmsg">
+			<p class="error-message" ng-bind="errmsg"></p>
+		</div>
+		<div class="form-group">
+			<div class="full-width pull-left">
+				<span class='pull-right'>
+					<button class="btn btn-info" type="submit" ng-disabled="submitting">Lưu thay đổi</button>
+					<button class="btn btn-danger" type="reset">Hủy</button>
+				</span>
+			</div>
+		</div>
+	</div>
+	<div class="form-modal">
+		<div class="form-modal-loading">
+			<i class="fa fa-spinner fa-pulse fa-3x fa-fw twitter-text"></i>
+			<span class="sr-only">Loading...</span>
+		</div>
+	</div>
+</form>

@@ -1,0 +1,30 @@
+.columns-2 {
+	$columns2-left-width: 220px;
+
+	.left-nav-box {
+		float: left;
+		min-width: $columns2-left-width;
+
+		ul.nav li a {
+			// border-radius: 0;
+		}
+	}
+
+	.right-content-box {
+		border-left: 1px solid $border-color;
+
+		.user-form {
+			min-width: $screen-ss-min;
+			// max-width: $screen-sm-min;
+
+			textarea {
+				resize: none;
+			}
+
+			.form-rule {
+				border-bottom: 1px dashed $border-color;
+				padding-bottom: $vienvong-default-space * 1.5;
+			}
+		}
+	}
+}

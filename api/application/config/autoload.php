@@ -97,7 +97,7 @@ $autoload['helper'] = array();
 | config files.  Otherwise, leave it blank.
 |
 */
-$autoload['config'] = array('email');
+$autoload['config'] = array('email', 'user_status');
 
 /*
 | -------------------------------------------------------------------

@@ -10,9 +10,9 @@
 if(!class_exists('MyExtends')) {
 	class MyExtends {
 		/**
-		 * ------------------------------------------------
+		 * ----------------------------------------
 		 * Random String
-		 * ------------------------------------------------
+		 * ----------------------------------------
 		 *
 		 * @todo Generate ramdom string with length inputed
 		 *
@@ -26,6 +26,16 @@ if(!class_exists('MyExtends')) {
 		        $randomString .= $characters[rand(0, $charactersLength - 1)];
 		    }
 		    return $randomString;
+		}
+		/**
+		 * ----------------------------------------
+		 * Create ID
+		 * ----------------------------------------
+		 *
+		 * @param string $unique unique data can create ID
+		 */
+		public function CreateID($unique) {
+			return md5($unique);
 		}
 	}
 }
