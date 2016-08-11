@@ -1,0 +1,37 @@
+<div class="pull-left full-width">
+	<ul class="nav nav-list nav-stacked">
+		<li ng-class="state.includes('^.info') ? 'active' : ''"><a ui-sref="app.main.profile.info">Thông tin cá nhân</a></li>
+		<li ng-class="state.includes('^.password') ? 'active' : ''"><a ui-sref="app.main.profile.password">Đổi mật khẩu</a></li>
+		<li>
+			<a href="" class="accordion-heading" data-toggle="collapse" data-target="#nav-list-articles">Quản lý bài viết <b class="caret"></b></a>
+			<ul class="nav nav-list collapse nav-stacked-second" id="nav-list-articles">
+				<li><a href="">Danh sách bài viết</a></li>
+				<li><a href="">Xem trước</a></li>
+			</ul>
+		</li>
+		<li>
+			<a href="" class="accordion-heading" data-toggle="collapse" data-target="#nav-list-users">Quản lý Users <b class="caret"></b></a>
+			<ul class="nav nav-list collapse nav-stacked-second" id="nav-list-users">
+				<li><a href="">Danh sách Users</a></li>
+				<li><a href="">Thông tin Users</a></li>
+			</ul>
+		</li>
+		<li>
+			<a href="" class="accordion-heading" data-toggle="collapse" data-target="#nav-list-groups">Quản lý Groups <b class="caret"></b></a>
+			<ul class="nav nav-list collapse nav-stacked-second" id="nav-list-groups">
+				<li><a ui-sref="app.main.groups.list">Danh sách Groups</a></li>
+				<li><a ui-sref="app.main.groups.detail">Tạo group</a></li>
+			</ul>
+		</li>
+		<li>
+			<a href="" class="accordion-heading" data-toggle="collapse" data-target="#nav-list-roles">Quản lý Roles <b class="caret"></b></a>
+			<ul class="nav nav-list collapse nav-stacked-second" id="nav-list-roles">
+				<li><a href="">Quản lý theo Group</a></li>
+				<li><a href="">Quản lý theo User</a></li>
+				<li><a href="">Thêm Role</a></li>
+			</ul>
+		</li>
+		<li><a href="" ng-click="logout()">Đăng xuất</a></li>
+	</ul>
+</div>
+<!-- <span class="pull-left column-pitch"></span> -->

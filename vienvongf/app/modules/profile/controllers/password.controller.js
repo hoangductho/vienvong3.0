@@ -7,7 +7,7 @@
  * # MainCtrl
  * Controller of the vienvongApp
  */
-angular.module('userMod')
+angular.module('profileMod')
 	.controller('PasswordCtrl', function ($rootScope, $scope, $state, localStorageService, FConnect) {
 		// submit status
 		$scope.submitting = false;

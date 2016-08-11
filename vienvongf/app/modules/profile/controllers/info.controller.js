@@ -7,8 +7,8 @@
  * # MainCtrl
  * Controller of the vienvongApp
  */
-angular.module('userMod')
-	.controller('ProfileCtrl', function ($rootScope, $scope, $state, localStorageService, FConnect) {
+angular.module('profileMod')
+	.controller('InfoCtrl', function ($rootScope, $scope, $state, localStorageService, FConnect) {
 		// submit status
 		$scope.submitting = false;
 		// error message of server

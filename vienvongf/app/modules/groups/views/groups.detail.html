@@ -1,0 +1,50 @@
+<form class="user-form" ng-class="submitting ? 'form-loading' : ''" ng-submit="update()" name="ProfileForm">
+	<div class="form-group form-heading">
+		<label class="twitter-text">Thêm Group Mới</label>
+	</div>
+	<div class="form-input form-group">
+		<div class="form-group ">
+			<label>Tên Group <span class='required-text'>*</span></label>
+			<input type="text" class="form-control" name="groupname" placeholder="Tên bằng tiếng việt dài 6-64 ký tự" ng-model="profile.fullname" ng-pattern="/^.{4,64}$/u"  required ng-init="fullnameInputting = 0" ng-focus="fullnameInputting = 1" ng-blur="fullnameInputting = 0">
+			<!-- <span class="help-block"></span> -->
+			<div ng-messages="ProfileForm.groupname.$error" ng-if="fullnameInputting == false">
+				<p ng-message="pattern" class="error-message">Tên bạn nhập vào không hợp lệ</p>
+			</div>
+		</div>
+		<div class="form-group ">
+			<label>Trạng thái <span class='required-text'>*</span></label>
+			<select name="groupstatus" class="form-control">
+				<option value="1">Mở</option>
+				<option value="2">Đóng</option>
+			</select>
+			<div ng-messages="ProfileForm.fullname.$error">
+				<p ng-message="pattern" class="error-message">Trạng thái nhập vào không hợp lệ</p>
+			</div>
+		</div>
+		<div class="form-group ">
+			<label>Miêu tả</label>
+			<textarea class="form-control" rows="5" placeholder="Miêu tả bằng tiếng việt dài 6-512 ký tự" ng-model="profile.introduce" name="introduce" ng-pattern="/^.{6,512}$/u" ng-init="introduceInputting = 0" ng-focus="introduceInputting = 1" ng-blur="introduceInputting = 0"></textarea>
+			<!-- <span class="help-block">Miêu tả bằng tiếng việt dài 6-512 ký tự</span> -->
+			<div ng-messages="ProfileForm.introduce.$error" ng-if="addressInputting == false">
+				<p ng-message="pattern" class="error-message">Miêu tả bạn nhập vào không hợp lệ</p>
+			</div>
+		</div>
+		<div class="form-group" ng-if="errmsg">
+			<p class="error-message" ng-bind="errmsg"></p>
+		</div>
+		<div class="form-group">
+			<div class="full-width pull-left">
+				<span class='pull-right'>
+					<button class="btn btn-info" type="submit" ng-disabled="submitting">Lưu</button>
+					<button class="btn btn-danger" type="reset">Hủy</button>
+				</span>
+			</div>
+		</div>
+	</div>
+	<div class="form-modal">
+		<div class="form-modal-loading">
+			<i class="fa fa-spinner fa-pulse fa-3x fa-fw twitter-text"></i>
+			<span class="sr-only">Loading...</span>
+		</div>
+	</div>
+</form>

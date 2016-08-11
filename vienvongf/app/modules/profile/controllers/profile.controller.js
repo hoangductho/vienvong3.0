@@ -7,8 +7,8 @@
  * # MainCtrl
  * Controller of the vienvongApp
  */
-angular.module('userMod')
-	.controller('UserCtrl', function ($rootScope, $scope, $state, localStorageService, FConnect) {
+angular.module('profileMod')
+	.controller('ProfileCtrl', function ($rootScope, $scope, $state, localStorageService, FConnect) {
 		// state object
 		$scope.state = $state;
 		// submit status

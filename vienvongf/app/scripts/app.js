@@ -25,7 +25,8 @@ angular
     'authMod',
     'facebookMod',
     'googleMod',
-    'userMod',
+    'profileMod',
+    'groupsMod',
   ])
   .config(function ($locationProvider, $stateProvider, $urlRouterProvider, localStorageServiceProvider) {
     // name prefix so your app doesn’t accidently read todos from another app using the same variable names
@@ -164,6 +165,26 @@ angular
       .state('app.main', {
         url: "/",
         templateUrl: "views/main.html",
+        resolve: {
+          online: function($rootScope, $state, $location, localStorageService) {
+            /**
+             * ====================================
+             * Check Loged In
+             * ====================================
+             */
+            var loggedIn = function() {
+              if(!$rootScope.auth) {
+                $rootScope.auth = localStorageService.get('auth');  
+              }
+              
+              if(!$rootScope.auth || $rootScope.auth == null) {
+                // $state.go('app.auth.signin');
+                window.location.href = $state.href('app.auth.signin');
+              }
+            }
+            loggedIn();
+          }
+        },
         controller: 'MainCtrl'
       })
       .state('app.about', {

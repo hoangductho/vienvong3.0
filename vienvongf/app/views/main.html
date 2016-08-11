@@ -41,7 +41,7 @@
                 <a class="pull-left" ui-sref='app.auth.signup'>Đăng ký</a>
               </li>
               <li class="" ng-if="user">
-                <a class="pull-left" ui-sref="app.main.user.profile" ng-bind="user"></a>
+                <a class="pull-left" ui-sref="app.main.profile.info" ng-bind="user"></a>
               </li>
               <!-- <li class="dropdown row">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
@@ -62,7 +62,15 @@
     </header>
 
     <div class="container-fluid content-page">
-      <div ui-view=""></div>
+      <div class="container columns-2">
+        <div class="left-nav-box col-md-3" main-menu>
+          
+        </div>
+        <span class="pull-left column-pitch"></span>
+        <div class="right-content-box col-md-9" ui-view>
+          
+        </div>
+      </div>
       <!-- <div class="jumbotron">
         <h1>'Allo, 'Allo!</h1>
         <p class="lead">
