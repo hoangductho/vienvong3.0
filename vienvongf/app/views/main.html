@@ -1,5 +1,5 @@
 <!-- Add your site or application content here -->
-    <header>
+    <!-- <header>
       <div class="navbar navbar-default" role="navigation">
         <div class="container-fluid" ng-init='typeshow = false'>
           <div class="navbar-header">
@@ -10,21 +10,8 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-
-            <!-- <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#header-navbar-collapse" ng-click='typeshow="user"'>
-              <span class="sr-only">Toggle navigation</span>
-              <span class="glyphicon glyphicon-user"></span>
-            </button>
-
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#header-navbar-collapse" ng-click='typeshow="search"'>
-              <span class="sr-only">Toggle navigation</span>
-              <span class="glyphicon glyphicon-search"></span>
-            </button> -->
-
             <a class="navbar-brand" href="/">Viễn Vọng</a>
           </div>
-
-          <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="header-navbar-collapse">
             <form class="navbar-form navbar-left" role="search">
               <div class="form-group search-box" ng-init='searchFocus = false'>
@@ -43,33 +30,57 @@
               <li class="" ng-if="user">
                 <a class="pull-left" ui-sref="app.main.profile.info" ng-bind="user"></a>
               </li>
-              <!-- <li class="dropdown row">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                  <span class="glyphicon glyphicon-user"></span> <span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu">
-                  <li><a href="#">Action</a></li>
-                  <li><a href="#">Another action</a></li>
-                  <li><a href="#">Something else here</a></li>
-                  <li role="separator" class="divider"></li>
-                  <li><a href="#">Separated link</a></li>
-                </ul>
-              </li> -->
             </ul>
           </div>
         </div>
       </div>
-    </header>
+    </header> -->
 
-    <div class="container-fluid content-page">
-      <div class="container columns-2">
-        <div class="left-nav-box col-md-3" main-menu>
-          
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#sidebar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#"><span>Viễn</span>Vọng</a>
+          <ul class="user-menu">
+            <li class="dropdown pull-right" ng-if="user">
+              <a href="#" class="dropdown-toggle header-user-box" data-toggle="dropdown"><i class="fa fa-user"></i> <span ng-bind="user" class="header-user-name top"></span> <span class="caret middle"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="#"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> Profile</a></li>
+                <li><a href="#"><svg class="glyph stroked gear"><use xlink:href="#stroked-gear"></use></svg> Settings</a></li>
+                <li><a href="#"><svg class="glyph stroked cancel"><use xlink:href="#stroked-cancel"></use></svg> Logout</a></li>
+              </ul>
+            </li>
+            <li class="dropdown pull-right" ng-if="!user">
+              <a class="pull-left" ui-sref="app.auth.signin">Đăng nhập </a>
+              <a class="none-padding-side pull-left"> | </a>
+              <a class="pull-left" ui-sref='app.auth.signup'> Đăng ký</a>
+            </li>
+          </ul>
         </div>
-        <span class="pull-left column-pitch"></span>
-        <div class="right-content-box col-md-9" ui-view>
-          
-        </div>
+                
+      </div><!-- /.container-fluid -->
+    </nav>  
+      
+    
+    <div class="content-page">
+      <div class="left-nav-box col-sm-3 col-lg-2 sidebar" main-menu>
+      </div> <!-- /.main-menu -->
+
+      <div class="right-content-box col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
+        <div class="row">
+          <ol class="breadcrumb">
+            <!-- <li><a href="#"><i class="fa fa-home"></i></a></li>
+            <li class="active" ng-bind="state.href(state.current.name, state.params)"></li> -->
+            <li><a href="#"><i class="fa fa-home"></i></a></li>
+            <li ng-repeat="item in breadcrumb"><a href="#" ng-bind="item"></a></li>
+          </ol>
+        </div><!--/.row-->
+        <div class="row" ui-view></div>
       </div>
       <!-- <div class="jumbotron">
         <h1>'Allo, 'Allo!</h1>

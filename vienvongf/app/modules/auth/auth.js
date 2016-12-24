@@ -42,7 +42,7 @@ angular
              * ====================================
              */
             $rootScope.$on( '$locationChangeStart', function(){
-              if($state.includes('app.auth') && !$state.includes('app.auth.logout')) {
+              if($state.includes('app.auth') && !$state.includes('app.auth.signout')) {
                 loggedIn();
               }
             });
@@ -52,7 +52,7 @@ angular
              * ====================================
              */
             $rootScope.$on( '$stateChangeSuccess', function(){
-              if($state.includes('app.auth') && !$state.includes('app.auth.logout')) {
+              if($state.includes('app.auth') && !$state.includes('app.auth.signout')) {
                 loggedIn();
               }
             });

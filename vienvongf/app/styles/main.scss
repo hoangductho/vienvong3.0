@@ -4,9 +4,9 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 @import "font-awesome/scss/font-awesome.scss";
 // endbower
 
+@import "lumino";
+
 @import "components/variables";
 @import "components/default";
 @import "components/template";
 @import "components/auth";
-@import "components/2columns";
-

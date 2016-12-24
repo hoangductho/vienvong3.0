@@ -83,12 +83,18 @@ class MBase extends CI_Model {
 	 *
 	 * @param array $data data set 
 	 * @param array $filter where filter
+	 * @param bool  $default 
 	 *
 	 * @return update result
 	 */
-	public function update($set, $filter) {
+	public function update($set, $filter, $default = false) {
 		try {
 			$update = $this->db->update($this->table, $set, $filter);
+
+			if($default) {
+				return $update;
+			}
+
 			if($update['ok']) {
 				return true;
 			}else {
@@ -101,12 +107,17 @@ class MBase extends CI_Model {
 	// ----------------------------------------------------------------
 	/**
 	 * --------------------------------------------
-	 *
+	 * Select Max
 	 * --------------------------------------------
 	 *
-	 * @param 
+	 * @param string $field
+	 * @param string $alias
+	 * @param array  $filter
 	 *
-	 * @return 
+	 * @return select max result
 	 */
+	public function select_max($field, $alias = '', $filter = null) {
+		return $this->db->select_max($field)->where($filter)->from($this->table)->get();
+	}
 
 }

@@ -3,49 +3,49 @@
  * Custom page header
  * ==============================================
  */
-header {
-  position: fixed;
-  float: left;
-  height: 50px;
-  width: 100%;
-  z-index: 10;
+// header {
+//   position: fixed;
+//   float: left;
+//   height: 50px;
+//   width: 100%;
+//   z-index: 10;
 
-  .search-box {
-    position: relative;
-    min-width: 480px;
+//   .search-box {
+//     position: relative;
+//     min-width: 480px;
 
-    .search-input {
-      min-width: 100%;
-      padding-right: 62px;
-    }
+//     .search-input {
+//       min-width: 100%;
+//       padding-right: 62px;
+//     }
 
-    .search-button {
-      position: absolute;
-      top: 1px;
-      right: 1px;
-      height: 32px;
-      width: 50px;
-      border-radius: 0;
-      outline: none;
-    }
-  }
+//     .search-button {
+//       position: absolute;
+//       top: 1px;
+//       right: 1px;
+//       height: 32px;
+//       width: 50px;
+//       border-radius: 0;
+//       outline: none;
+//     }
+//   }
 
-  @media (max-width: $screen-sm-max) {
-    .search-box {
-      min-width: 400px;
-    }  
-  }
+//   @media (max-width: $screen-sm-max) {
+//     .search-box {
+//       min-width: 400px;
+//     }  
+//   }
 
-  @media (max-width: $screen-xs-max) {
-    .search-box {
-      min-width: 280px;
-    }  
-  }
+//   @media (max-width: $screen-xs-max) {
+//     .search-box {
+//       min-width: 280px;
+//     }  
+//   }
 
-  .open > a{
-    background-color: inherit !important;
-  }
-}
+//   .open > a{
+//     background-color: inherit !important;
+//   }
+// }
 
 /* Custom page footer */
 footer {
@@ -137,4 +137,39 @@ form.form-loading {
       padding-left: $vienvong-default-space * 2.5;
     }
   } 
+}
+
+/* Header user name style*/
+.header-user-box {
+  display: inline-block;
+
+  span {
+    display: inline-block;
+  }
+
+  span.top {
+    vertical-align: top;
+  }
+
+  span.middle {
+    vertical-align: middle;
+  }
+}
+
+.header-user-name {
+  @media (max-width: $screen-xs-min) {
+    max-width: 120px;
+    overflow: hidden;
+  }
+}
+
+/*Menu style*/
+.nav.menu {
+  .fa {
+    width: 25px;
+  }
+}
+
+.table > thead > tr > th {
+  height: auto;
 }

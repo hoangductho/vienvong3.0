@@ -65,11 +65,14 @@ angular
                   update: $rootScope.apiHost + 'user/profile/update',
                 },
                 password: $rootScope.apiHost + 'user/password',
+              },
+              groups: {
+                edit: $rootScope.apiHost + 'groups/edit',
               }
             };
           },
         },
-        controller: function($rootScope, $filter, $window, $interval, localStorageService, FConnect) {
+        controller: function($rootScope, $filter, $state, $window, $interval, localStorageService, FConnect) {
           // --------------------------------------------------------
           /**
            * Load user authenticate info
@@ -156,9 +159,28 @@ angular
                 $rootScope.rsakey = rsa;
             }
           };
+
+          // breadcrumb and state
+          var breadcrumb = function() {
+            // Get breadcrumb 
+            var url = $state.href($state.current.name, $state.params);
+
+            $rootScope.breadcrumb = url.split('/');
+            $rootScope.breadcrumb.splice(0, 1);
+          }
           
+          // Get state
+          $rootScope.state = $state;
+
           // Init default security key
           $rootScope.rsaKeyInit();
+          breadcrumb();
+
+          $rootScope.$on( '$stateChangeSuccess', function(){
+            breadcrumb();
+          });
+
+
           // --------------------------------------------------------
         }
       })

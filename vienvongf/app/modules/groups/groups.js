@@ -21,14 +21,24 @@ angular
         templateUrl: modulePath + "views/groups.html",
         // controller: 'GroupsCtrl'
       })
-      .state('app.main.groups.detail', {
-        url: "/detail/:gid",
-        templateUrl: modulePath + "views/groups.detail.html",
+      .state('app.main.groups.users', {
+        url: "/users/:gid",
+        templateUrl: modulePath + "views/groups.users.html",
         // controller: 'GroupsCreateCtrl'
+      })
+      .state('app.main.groups.edit', {
+        url: "/edit/:gid",
+        templateUrl: modulePath + "views/groups.edit.html",
+        controller: 'EditGroupsCtrl'
       })
       .state('app.main.groups.list', {
         url: "/list",
         templateUrl: modulePath + "views/groups.list.html",
-        // controller: 'GroupsListCtrl'
+        controller: 'ListGroupsCtrl'
+      })
+      .state('app.main.groups.roles', {
+        url: "/roles/:gid",
+        templateUrl: modulePath + "views/groups.roles.html",
+        // controller: 'GroupsCreateCtrl'
       })
   });

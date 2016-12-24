@@ -56,7 +56,7 @@ class MY_Controller extends CI_Controller {
 	 */
 	protected function response($data) {
 		if(is_array($data)) {
-			$this->response_data = $data;
+			$this->response_data = array('ok' => $data['ok'], 'err' => $data['err'], 'errmsg' => $data['errmsg']);;
 		}
 
 		return $this;

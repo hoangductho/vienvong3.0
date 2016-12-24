@@ -26,9 +26,13 @@ class Rules {
 	 */
 	private $function;
 	/**
-	 * Extend funtion
+	 * Extend functions
 	 */
 	private $Extend;
+	/**
+	 * Error functions
+	 */
+	private $VError;
 	// ----------------------------------------------------------------
 	/**
 	 * --------------------------------------------
@@ -45,6 +49,8 @@ class Rules {
 		$this->class = $router->class;
 
 		$this->Extend = new MyExtends();
+
+		$this->VError = new VError();
 	}
 	// ----------------------------------------------------------------
 	/**
@@ -87,11 +93,11 @@ class Rules {
 	 */
 	private function _getrule() {
 		if(empty($this->controller->rules)){
-			$this->error('Rule: Controller '. $this->class .' did not set rules', 401);
+			$this->VError->error(10000);
 		}
 
 		if(empty($this->controller->rules[$this->function])) {
-			$this->error('Rule: Function '. $this->function .' did not define in rules', 401);
+			$this->VError->error(10001);
 		}
 
 		return (object) $this->controller->rules[$this->function];
@@ -118,17 +124,17 @@ class Rules {
 		if($this->controller->input->method(true) === 'OPTIONS'){
 			die();
 		}elseif(strtoupper($rules->method) != $this->controller->input->method(true)) {
-			$this->error('Rule: Function '. $this->function .' required other method', 401);
+			$this->VError->error(10101);
 		}
 
 		// check encrypt data required
 		if($rules->security && empty($this->controller->input->get_request_header('Content-Header'))) {
-			$this->error('Rule: Function '. $this->function .' required security mode', 401);
+			$this->VError->error(10201);
 		}
 
 		// check authenticate required
 		if($rules->authenticate && empty($this->controller->input->get_request_header('Authenticate'))) {
-			$this->error('Rule: Function '. $this->function .' required authenticate mode', 401);
+			$this->VError->error(10301);
 		}
 	}
 	// ----------------------------------------------------------------
@@ -157,7 +163,7 @@ class Rules {
 
 			foreach ($rules->data as $key => $value) {
 				if(!isset($this->controller->request_data[$key]) && (empty($value['allow_null']) || !$value['allow_null'])) {
-					$this->error('Rule: '. $key .' is required', 401);
+					$this->VError->error(10402, 'Rule: '. $key .' is required');
 				}
 
 				// data need check
@@ -171,10 +177,10 @@ class Rules {
 					// filter data 
 					$filter = filter_var($inputed, $value['filter'], array('options' => $options));
 
-					if(!$filter === false || ((!empty($value['allow_null']) && $value['allow_null']) && empty($inputed))) {
+					if((!$filter === false || ($value['filter'] == FILTER_VALIDATE_INT && $filter === 0)) || ((!empty($value['allow_null']) && $value['allow_null']) && empty($inputed))) {
 						$validate->{$key} = $inputed;
 					}else {
-						$this->error('Rule: '. $key . ' = ' . $inputed .' is invalid', 401);
+						$this->VError->error(10403, 'Rule: '. $key . ' = ' . $inputed .' is invalid');
 					}
 				}else {
 					$validate->{$key} = $inputed;
@@ -183,7 +189,7 @@ class Rules {
 
 			$this->controller->request_data = $validate;
 		}elseif(!empty($rules->data)) {
-			$this->error('Rule: Function '. $this->function .' required data input', 401);
+			$this->VError->error(10400, 'Rule: Function '. $this->function .' required data input');
 		}
 	}
 	// ----------------------------------------------------------------
@@ -209,7 +215,7 @@ class Rules {
 			$datetime = date('yyyy/mm/dd H:i:s');
 			// check expired 
 			if($authInfo['live_time'] < $datetime) {
-				$this->error('Authenticate: token is expired', 498);
+				$this->VError->error(10302);
 			}
 			// create check conditions
 			$where = array(
@@ -225,14 +231,14 @@ class Rules {
 			$access_token = $this->controller->MAccess_token->exists($where, '_id, ip, password');
 			// check authenticate
 			if(!$access_token) {
-				$this->error('Authenticate: token is invalid', 498);
+				$this->VError->error(10303);
 			}
 			// get user info
 			if($user = $this->controller->MUser->exists(array('_id' => $this->Extend->CreateID($authInfo['email'])), '*')) {
 				$user = $user[0];
 				// check password changed
 				if(!empty($access_token[0]['password']) && $access_token[0]['password'] != $user['password']) {
-					$this->error('Authenticate: token is invalid', 498);
+					$this->VError->error(10303);
 				}
 				// get status code
 				$actived_status = $this->controller->config->item('user_status')->actived;
@@ -240,10 +246,10 @@ class Rules {
 				if(!empty($user['status']) && $user['status'] === $actived_status)
 					$this->controller->user = $user;
 				else {
-					$this->error('Authenticate: user is not actived', 401);	
+					$this->VError->error(10304);	
 				}
 			}else {
-				$this->error('Authenticate: user is not existed', 498);
+				$this->VError->error(10305);
 			}
 		}
 	}
